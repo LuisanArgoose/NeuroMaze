@@ -1,6 +1,6 @@
 #define   Name       "Neuromaze"
 ; Версия приложения
-#define   Version    "0.0.1"
+#define   Version    "0.0.2"
 ; Фирма-разработчик
 #define   Publisher  "Alpha 1"
 ; Имя исполняемого модуля
