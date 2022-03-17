@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    public GameObject WallBlock, Infinity, Room, Clone, LavaBlock, BarObject, WarningObject, EscapeMenu, AcceptMenu, AcceptExitButton, PauseX, PauseY, TimerText, Maincanvas, Mstart  ;
+    public GameObject WallBlock, Infinity, Room, Clone, LavaBlock, BarObject, WarningObject, EscapeMenu, AcceptMenu, AcceptExitButton, PauseX, PauseY, TimerText, Maincanvas, Mstart, ConBut, ConButS;
     public Getstates Bar;
     public float RotationSpeed = 1.0f;
     private Vector2 velocity;
@@ -21,6 +21,8 @@ public class NewBehaviourScript : MonoBehaviour
     private bool NeuroCondition = true;
     private bool Escape = false;
     private bool StartMenu = true;
+    private bool MedCon = false;
+    private int Select = 0;
     
 
 
@@ -30,7 +32,7 @@ public class NewBehaviourScript : MonoBehaviour
     EdgeCollider2D m_Collider2D;
     Vector2 VectorMath;
     Image BarImage, WarningImage;
-    Text BarText, WarningText;
+    Text BarText, WarningText, ConButText, ConButSText;
 
     private void CreateMap(int[,] Map){
         
@@ -93,7 +95,22 @@ public class NewBehaviourScript : MonoBehaviour
     {
         AcceptMenu.SetActive(false);
     }
-
+    public void MedButtonClick()
+    {
+        MedCon = !MedCon;
+        if (MedCon)
+        {
+            Select = 1;
+            ConButText.text = "Медитация";
+            ConButSText.text = "Медитация";
+        }
+        else
+        {
+            Select = 0;
+            ConButText.text = "Концентрация";
+            ConButSText.text = "Концентрация";
+        }
+    }
     public void ArmButtonClick()
     {
         if (!Input.GetKey(KeyCode.Space))
@@ -170,7 +187,9 @@ public class NewBehaviourScript : MonoBehaviour
         Room = Instantiate(Room,new Vector3(-7.7f,4.16f,-0.9f),Quaternion.identity);
         BarImage = BarObject.GetComponent<Image>();
         BarText = BarObject.GetComponentInChildren<Text>();
-        
+        ConButText = ConBut.GetComponentInChildren<Text>();
+        ConButSText = ConButS.GetComponentInChildren<Text>();
+
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_Collider2D = GetComponent<EdgeCollider2D>();
         WarningImage = WarningObject.GetComponent<Image>();
@@ -249,10 +268,10 @@ public class NewBehaviourScript : MonoBehaviour
             string Textc = "0%";
             WarningObject.SetActive(false);
             
-            Pot = (float)(Bar.States[0]) / 100;
+            Pot = (float)(Bar.States[Select]) / 100;
             
                            
-            Textc = Convert.ToString(Bar.States[0]) + "%" + Bar.debug;
+            Textc = Convert.ToString(Bar.States[Select]) + "%" + Bar.debug;
             if (!Escape) {
                 BarImage.fillAmount = Pot;
                 BarText.text = Textc;
