@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    public GameObject WallBlock, Infinity, Room, Clone, LavaBlock, BarObject, WarningObject, EscapeMenu, AcceptMenu, AcceptExitButton, PauseX, PauseY, TimerText, Maincanvas, Mstart, ConBut, ConButS;
+    public GameObject Room, BarObject, WarningObject, EscapeMenu, AcceptMenu, AcceptExitButton, PauseX, PauseY, TimerText, Maincanvas, Mstart, ConBut, ConButS;
     public Getstates Bar;
     public float RotationSpeed = 1.0f;
     private Vector2 velocity;
@@ -34,55 +34,6 @@ public class NewBehaviourScript : MonoBehaviour
     Image BarImage, WarningImage;
     Text BarText, WarningText, ConButText, ConButSText;
 
-    private void CreateMap(int[,] Map){
-        
-        
-        float x =-7.7f;
-        float y =4.16f;
-        bool Zero = true;
-        for (int k = 0; k < 2; k++)
-        {
-            for (int i = 0; i < Map.GetLength(0); i++)
-            {
-                for (int j = 0; j < Map.GetLength(1); j++)
-                {   
-                    if(Map[i, j] !=1 & Zero)
-                    {
-
-                        if (Map[i, j] != 1)
-                        {
-                            Clone = Instantiate(LavaBlock, new Vector3(x + 1.19f * j, y - 1.19f * i, -1f + 0.0001f * (j - i)), Quaternion.identity);
-                            Clone.transform.SetParent(Room.transform, true);
-                        }
-                        
-                        if (Map[i, j] == 2)
-                        {
-                            transform.position = new Vector3(x + 1.19f * j, y - 1.19f * i, -1f);
-                            Camera.main.transform.position = new Vector3(x + 1.19f * j, y - 1.19f * i,-10.0f);
-                        }
-                        if (Map[i, j] == 3)
-                        {
-                            Clone = Instantiate(Infinity, new Vector3(x + 1.19f * j, y - 1.19f * i, -2f), Quaternion.identity);
-                            Clone.transform.SetParent(Room.transform, true);
-                        }
-                    }
-                    if(!Zero)
-                    {
-                        if (Map[i, j] == 1)
-                        {
-                            Clone = Instantiate(WallBlock, new Vector3(x + 1.19f * j, y - 1.19f * i, -1f - 0.0001f * (1+j + i)), Quaternion.identity);
-                            Clone.transform.SetParent(Room.transform, true);
-                        }
-                    }
-                }
-            }
-            Zero = false;
-        }
-        timer = 0;
-        
-        
-        
-    }
     public void Exit()
     {
         AcceptMenu.SetActive(true);
@@ -122,7 +73,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     }
     private int timer = 0;
-    private IEnumerator coroutine;
+    private IEnumerator coroutine, newMap;
     float ite1;
     float ite2;
     IEnumerator WaitAndPrint()
@@ -184,7 +135,9 @@ public class NewBehaviourScript : MonoBehaviour
         AcceptMenu.SetActive(false);
         EscapeMenu.SetActive(false);
         Map = new Maze(MapSizeXY[0], MapSizeXY[1]);
-        Room = Instantiate(Room,new Vector3(-7.7f,4.16f,-0.9f),Quaternion.identity);
+
+        //Room.GetComponent<RoomCreate>().Map = Map.GetNewLevel();
+        //Room = Instantiate(Room,new Vector3(-7.7f,4.16f,-0.9f),Quaternion.identity);
         BarImage = BarObject.GetComponent<Image>();
         BarText = BarObject.GetComponentInChildren<Text>();
         ConButText = ConBut.GetComponentInChildren<Text>();
@@ -196,11 +149,10 @@ public class NewBehaviourScript : MonoBehaviour
         WarningText = WarningObject.GetComponentInChildren<Text>();
 
         velocity = new Vector2(0.0f, 0.1f);
-        CreateMap(Map.GetNewLevel());
+        //CreateMap();
         ite1 = m_Rigidbody.position.x;
         ite2 = m_Rigidbody.position.y;
-        PauseX.GetComponent<Text>().text = Convert.ToString(MapSizeXY[0]);
-        PauseY.GetComponent<Text>().text = Convert.ToString(MapSizeXY[1]);
+        
 
 
     }
@@ -233,7 +185,7 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        
         float Pot = 0;
         if (Input.GetKeyDown(KeyCode.Escape) & !AcceptMenu.activeSelf)
         {
@@ -326,32 +278,7 @@ public class NewBehaviourScript : MonoBehaviour
         } 
         if (Input.GetKey(KeyCode.O)&&Input.GetKey(KeyCode.U)&&Input.GetKey(KeyCode.T)){
             m_Collider2D.isTrigger =false;
-        }      
-    }
-    public void Recreate()
-    {
-        
-        try
-        {
-            MapSizeXY[0] = Convert.ToInt32(PauseX.GetComponent<Text>().text);
-            MapSizeXY[1] = Convert.ToInt32(PauseY.GetComponent<Text>().text);
-            if (MapSizeXY[0] < 5 || MapSizeXY[0] > 100 || MapSizeXY[1] < 5 || MapSizeXY[1] > 100) {
-                return;
-            }
-
-        
-            foreach (Transform child in Room.transform)
-            {
-                print(child.gameObject.name);
-                Destroy(child.gameObject);
-            }
-            LevelNumber++;
-            StopCoroutine(coroutine);
-
-            CreateMap(Map.GetNewLevel(MapSizeXY[0], MapSizeXY[1]));
-            Debug.Log(Map.MaxWay);
-        }
-        catch { }
+        }   
     }
     void OnTriggerEnter2D(Collider2D col){
         if(col.gameObject.tag == "Finish"){
@@ -362,7 +289,7 @@ public class NewBehaviourScript : MonoBehaviour
             }
             LevelNumber++;
             StopCoroutine(coroutine);
-            CreateMap(Map.GetNewLevel(MapSizeXY[0], MapSizeXY[1]));
+            //CreateMap(Map.GetNewLevel(MapSizeXY[0], MapSizeXY[1]));
             StartCoroutine(coroutine);
         }
 

@@ -604,9 +604,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 627960008}
-        m_TargetAssemblyTypeName: NewBehaviourScript, Assembly-CSharp
-        m_MethodName: Recreate
+      - m_Target: {fileID: 1277185321}
+        m_TargetAssemblyTypeName: LevelCreateScript, Assembly-CSharp
+        m_MethodName: RecreateLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -736,14 +736,14 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 469321227}
   m_TextComponent: {fileID: 1784346718}
-  m_Placeholder: {fileID: 1739058706}
-  m_ContentType: 0
+  m_Placeholder: {fileID: 0}
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 1
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -1554,14 +1554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52c0a0ad0e188d640b3d058a5809d730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WallBlock: {fileID: 3882853139440357444, guid: 513db0ed0c806674492af59733fd1d39,
-    type: 3}
-  Infinity: {fileID: 4329111468118315540, guid: d1b589c04147c5640b64066cf1b5da4b,
-    type: 3}
   Room: {fileID: 8162984507163421676, guid: 45028a0f7b51ddb42889f78fe2be6c12, type: 3}
-  Clone: {fileID: 0}
-  LavaBlock: {fileID: 3187789129609169968, guid: 43034793671900e40b32ada5ac51c5d8,
-    type: 3}
   BarObject: {fileID: 687849734}
   WarningObject: {fileID: 618803193}
   EscapeMenu: {fileID: 1226671169}
@@ -2457,14 +2450,14 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1076298490}
   m_TextComponent: {fileID: 2046431154}
-  m_Placeholder: {fileID: 912813771}
-  m_ContentType: 0
+  m_Placeholder: {fileID: 0}
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 1
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -2842,9 +2835,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 627960008}
-        m_TargetAssemblyTypeName: NewBehaviourScript, Assembly-CSharp
-        m_MethodName: Recreate
+      - m_Target: {fileID: 1277185321}
+        m_TargetAssemblyTypeName: LevelCreateScript, Assembly-CSharp
+        m_MethodName: StartRecreateLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3167,6 +3160,56 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1277185320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1277185322}
+  - component: {fileID: 1277185321}
+  m_Layer: 0
+  m_Name: LevelCreator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1277185321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277185320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263aab201eec7914cab0f2f6b40f56cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MapSizeXY: 3200000032000000
+  Room: {fileID: 8162984507163421676, guid: 45028a0f7b51ddb42889f78fe2be6c12, type: 3}
+  RoomClone: {fileID: 0}
+  PauseX: {fileID: 1342832091}
+  PauseY: {fileID: 469321226}
+  PauseXS: {fileID: 1316538120}
+  PauseYS: {fileID: 1076298489}
+--- !u!4 &1277185322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277185320}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.32811415, y: 0.5644829, z: 385.06497}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1289770400
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,14 +3367,14 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1316538121}
   m_TextComponent: {fileID: 1005162709}
-  m_Placeholder: {fileID: 1647732508}
-  m_ContentType: 0
+  m_Placeholder: {fileID: 0}
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 1
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -3467,14 +3510,14 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1342832092}
   m_TextComponent: {fileID: 1682238093}
-  m_Placeholder: {fileID: 1976864747}
-  m_ContentType: 0
+  m_Placeholder: {fileID: 0}
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 1
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
