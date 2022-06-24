@@ -64,7 +64,7 @@ public class LevelCreateScript : MonoBehaviour
     void MainCreate()
     {
         //Проверка на размерность от 5 до 100
-        if (MapSizeXY[0] < 5 || MapSizeXY[0] > 100 || MapSizeXY[1] < 5 || MapSizeXY[1] > 100)
+        if (MapSizeXY[0] < 5 || MapSizeXY[0] > 200 || MapSizeXY[1] < 5 || MapSizeXY[1] > 200)
         {
             return;
         }

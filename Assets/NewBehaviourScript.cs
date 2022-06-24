@@ -194,7 +194,10 @@ public class NewBehaviourScript : MonoBehaviour
         if(!StartMenu) { 
         //Bar.GetState();
         }
-
+        if (Bar == null)
+        {
+            Bar = new Getstates();
+        }
         if (!Bar.Connect || !NeuroCondition)
         {
             
@@ -303,7 +306,6 @@ public class NewBehaviourScript : MonoBehaviour
         public int[] States = {0,0};
         public bool Connect = false;
 
-        private static readonly HttpClient client = new HttpClient();
         public void GetState(string conData, string medData)
         {
             try                     

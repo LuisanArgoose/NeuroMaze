@@ -26,52 +26,40 @@ public class RoomCreate : MonoBehaviour
         Map = MapLib.GetNewLevel(MapSizeXY[0], MapSizeXY[1]); //Генерация нового лабиринта по размерам
         float x = -7.7f; //Относительные координаты
         float y = 4.16f;
-        // последовательная отрисовка. Сначала проходы, потом стены
-        // Zero это флаг который переключится когда всё кроме стен будет отрисовано
-        bool Zero = true; 
-        for (int k = 0; k < 2; k++)
+        // последовательная отрисовка.
+        int toF = 1;
+        int toW = 1;
+        float spaceSize = 1.19f;
+        for (int i = 0; i < Map.GetLength(0); i++)
         {
-            for (int i = 0; i < Map.GetLength(0); i++)
+            for (int j = 0; j < Map.GetLength(1); j++)
             {
-                for (int j = 0; j < Map.GetLength(1); j++)
+
+                if (Map[i, j] != 1)
                 {
-                    if (Map[i, j] != 1 & Zero) // отрисовка всего кроме стен
-                    {
+                    Clone = Instantiate(LavaBlock, new Vector3(x + spaceSize * j, y - spaceSize * i, -1f + 0.0001f * toF++), Quaternion.identity);
+                    Clone.transform.SetParent(this.transform, true);
+                }
 
-                        if (Map[i, j] != 1)
-                        {
-                            Clone = Instantiate(LavaBlock, new Vector3(x + 1.19f * j, y - 1.19f * i, -1f + 0.0001f * (j - i)), Quaternion.identity);
-                            Clone.transform.SetParent(this.transform, true);
-                        }
+                if (Map[i, j] == 2)
+                {
+                    Arrow.transform.position = new Vector3(x + spaceSize * j, y - spaceSize * i, -1.1f);
+                    Camera.main.transform.position = new Vector3(x + spaceSize * j, y - spaceSize * i, -10.0f);
+                }
+                if (Map[i, j] == 3)
+                {
+                    Clone = Instantiate(Infinity, new Vector3(x + spaceSize * j, y - spaceSize * i, -2f), Quaternion.identity);
+                    Clone.transform.SetParent(this.transform, true);
+                }
 
-                        if (Map[i, j] == 2)
-                        {
-                            Arrow.transform.position = new Vector3(x + 1.19f * j, y - 1.19f * i, -1f);
-                            Camera.main.transform.position = new Vector3(x + 1.19f * j, y - 1.19f * i, -10.0f);
-                        }
-                        if (Map[i, j] == 3)
-                        {
-                            Clone = Instantiate(Infinity, new Vector3(x + 1.19f * j, y - 1.19f * i, -2f), Quaternion.identity);
-                            Clone.transform.SetParent(this.transform, true);
-                        }
-                    }
-                    if (!Zero) // Отрисовка стен
-                    {
-                        if (Map[i, j] == 1)
-                        {
-                            Clone = Instantiate(WallBlock, new Vector3(x + 1.19f * j, y - 1.19f * i, -1f - 0.0001f * (1 + j + i)), Quaternion.identity);
-                            Clone.transform.SetParent(this.transform, true);
-                        }
-                    }
-
-
-
+                if (Map[i, j] == 1)
+                {
+                    Clone = Instantiate(WallBlock, new Vector3(x + spaceSize * j, y - spaceSize * i, -1f - 0.0001f * toW++), Quaternion.identity);
+                    Clone.transform.SetParent(this.transform, true);
                 }
             }
-            Zero = false;
         }
         yield return 0;
-        //timer = 0;
     }
 
     // Update is called once per frame
