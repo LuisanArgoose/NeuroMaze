@@ -9,11 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1230606289374460611}
-<<<<<<< Updated upstream
-=======
   - component: {fileID: 953159079152472288}
   - component: {fileID: 3747182587843487986}
->>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Room
   m_TagString: Untagged
@@ -35,8 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
-=======
 --- !u!114 &953159079152472288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,4 +132,3 @@ PolygonCollider2D:
       - {x: -0.5877852, y: -0.80901706}
       - {x: 0.58778536, y: -0.80901694}
       - {x: 0.9510565, y: 0.30901712}
->>>>>>> Stashed changes
