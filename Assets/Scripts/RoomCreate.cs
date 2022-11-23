@@ -20,18 +20,18 @@ public class RoomCreate : MonoBehaviour
     void Start()
     {
         Arrow = GameObject.Find("Arrow");
-        MapSizeXY = ContrillerScript.getMapSize();
+        MapSizeXY = ContrillerScript.SG.GetMapSize();
         MapLib = new Maze();
         CreateMapAsync();
     }
     void CreateMapAsync()
     {
-        Map = MapLib.GetNewLevel(MapSizeXY[0], MapSizeXY[1]); //Генерация нового лабиринта по размерам
-        Debug.Log(MapLib.GetSeed());
         //Map = MapLib.GetNewLevel(6, 6,"dw3");
-        List<Cell> mapCell = MapLib.GetListMap();
-        float x = -7.7f; //Относительные координаты
-        float y = 4.16f;
+        List<Cell> mapCell = MapLib.GetLevel(MapSizeXY[0], MapSizeXY[1]); //Генерация нового лабиринта по размерам
+        //Debug.Log(MapLib.GetSeed());
+        ContrillerScript.SG.SetSeed(MapLib.GetSeed());
+        float x = 0f; //Относительные координаты
+        float y = 0f;
         float step = 1.27f;
         Cell toTransform = mapCell.Single(c => c.Addons == 2);
         x -= step * (toTransform .Xpos + 1);
