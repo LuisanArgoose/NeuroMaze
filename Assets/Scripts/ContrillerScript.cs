@@ -3,11 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Runtime.Serialization.Formatters.Binary;
+using MazeLib;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
@@ -16,17 +17,23 @@ public class ContrillerScript : MonoBehaviour
     public static ContrillerScript SG { get; private set; }
     private string _seed;
     private float _time;
+    private Maze _maze = new Maze();
     
     public Getstates Bar{ get; private set; }
     public bool IsArmMode { get; set; }
     public bool IsMedit { get; set; }
     private List<SeansPoint> _seansWriter = new List<SeansPoint>();
     private IEnumerator GetstatesCorutine;
+
+    private List<Profile> _profileList = new List<Profile>();
     
     private List<Seans> _seansList = new List<Seans>();
     public List<int> MapSizeXY = new List<int>() { 50, 50 };
     private int UserID = 1;
-    private string UserName = "Luisan";
+    private string _defaultName = "Anonimus";
+    public string ActualUserName;
+    public bool IsSingIn { get; set; }
+    
     static ContrillerScript()
     {
         //singleton = new ContrillerScript();
@@ -48,6 +55,8 @@ public class ContrillerScript : MonoBehaviour
         IsArmMode = false;
         IsMedit = false;
         GetstatesCorutine = WaitHttp();
+        ActualUserName = _defaultName;
+        IsSingIn = false;
     }
 
     IEnumerator WaitHttp()
@@ -118,12 +127,11 @@ public class ContrillerScript : MonoBehaviour
         BinaryFormatter bf = new BinaryFormatter(); 
         FileStream file = File.Create(Application.persistentDataPath 
                                       + "/MySaveData.dat"); 
-        //Debug.Log(Application.persistentDataPath);
         SaveData data = new SaveData();
         data.SeansList = _seansList;
         bf.Serialize(file, data);
         file.Close();
-        //Debug.Log("Game data saved!");
+        Debug.Log("Game data saved!");
     }
     public void SaveGame()
     {
@@ -134,7 +142,7 @@ public class ContrillerScript : MonoBehaviour
             Size = MapSizeXY[0],
             PlayTime = this._time,
             UserID = this.UserID,
-            UserName = this.UserName,
+            UserName = this.ActualUserName,
             Seed = this._seed,
             SeansWriter  = this._seansWriter
         };
@@ -153,11 +161,84 @@ public class ContrillerScript : MonoBehaviour
             SaveData data = (SaveData)bf.Deserialize(file);
             _seansList = data.SeansList;
             file.Close();
-            //Debug.Log("Game data loaded!");
+            Debug.Log("Game data loaded!");
         }
         //else
             //Debug.LogError("There is no save data!");
         return _seansList;
+    }
+
+    private void saveProfiles()
+    {
+        BinaryFormatter bf = new BinaryFormatter(); 
+        FileStream file = File.Create(Application.persistentDataPath 
+                                      + "/ProfilesData.dat");
+        ProfileData data = new ProfileData();
+        data.ProfileList = _profileList;
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    private void loadProfiles()
+    {
+        if (File.Exists(Application.persistentDataPath
+                        + "/ProfilesData.dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file =
+                File.Open(Application.persistentDataPath
+                          + "/ProfilesData.dat", FileMode.Open);
+            ProfileData data = (ProfileData)bf.Deserialize(file);
+            _profileList = data.ProfileList;
+            file.Close();
+        }
+    }
+    public void Register(string userName, string password)
+    {
+
+        loadProfiles();
+        if (_profileList.Count(pr => pr.UserName == userName) == 0 &&
+            userName != _defaultName
+            
+           )
+        {
+            string temp =_maze.GetEncryptMap(password);
+            Profile profile = new Profile()
+            {
+                UserName = userName,
+                EncryptPassword = _maze.GetEncryptMap(password)
+            };
+            _profileList.Add(profile);
+            //UserName = userName;
+            //IsSingIn = true;
+            saveProfiles();
+            Debug.Log("Nice regis");
+        }
+    }
+    public void Login(string userName, string password)
+    {
+
+        loadProfiles();
+        if (_profileList.Count(pr => pr.UserName == userName) == 1)
+        {
+            Profile profile = _profileList.Single(pr => pr.UserName == userName);
+            string enc = _maze.GetEncryptMap(password);
+            bool se = String.Equals(profile.EncryptPassword, enc);
+            if (se)
+            {
+                ActualUserName = profile.UserName;
+                IsSingIn = true;
+                Debug.Log("Nice login");
+            }
+        }
+        saveProfiles();
+        
+    }
+
+    public void Exit()
+    {
+        ActualUserName = _defaultName;
+        IsSingIn = false;
     }
 
     public List<Seans> GetSeansList()
@@ -172,6 +253,7 @@ public class ContrillerScript : MonoBehaviour
     {
         _time = time;
     }
+    
 
     // Start is called before the first frame update
     void Start()

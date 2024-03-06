@@ -14,6 +14,7 @@ namespace DefaultNamespace
         public int UserID { get; set; }
         public string UserName { get; set; }
         public string Seed { get; set; }
+        public int Average { get; set; }
         public List<SeansPoint> SeansWriter { get; set; }
         public string GetDate()
         {
