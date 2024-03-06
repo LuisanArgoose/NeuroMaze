@@ -1,6 +1,6 @@
 #define   Name       "Neuromaze"
 ; Версия приложения
-#define   Version    "0.0.1"
+#define   Version    "0.1.0"
 ; Фирма-разработчик
 #define   Publisher  "Alpha 1"
 ; Имя исполняемого модуля
@@ -22,11 +22,11 @@ DefaultDirName={pf}\{#Name}
 DefaultGroupName={#Name}
 
 ; Каталог, куда будет записан собранный setup и имя исполняемого файла
-OutputDir=D:\ОИТ\Практика 3 курс\Alpha 1
-OutputBaseFileName=Neuromaze
+OutputDir=F:\Диплом\NeuroGame\
+OutputBaseFileName=NeuromazeSetup
 
 ; Файл иконки                                                     s
-SetupIconFile=D:\ОИТ\Практика 3 курс\Alpha 1\Alpha 1\Nicon.ico
+SetupIconFile=F:\Диплом\NeuroGame\Alpha 1\Nicon.ico
 
 ; Параметры сжатия
 Compression=lzma
@@ -38,10 +38,10 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 
 ; Исполняемый файл
-Source: "D:\ОИТ\Практика 3 курс\Alpha 1\Alpha 1\Alpha 1.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "F:\Диплом\NeuroGame\Alpha 1\Alpha 1.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 ; Прилагающиеся ресурсы
-Source: "D:\ОИТ\Практика 3 курс\Alpha 1\Alpha 1\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "F:\Диплом\NeuroGame\Alpha 1\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 [Icons]
 
 Name: "{group}\{#Name}"; Filename: "{app}\{#ExeName}"
